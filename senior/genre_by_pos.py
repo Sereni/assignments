@@ -54,10 +54,17 @@ def main():
     plt.figure()
     plt.plot(p.Y[:n, 0], p.Y[:n, 1], 'or',
              p.Y[n:, 0], p.Y[n:, 1], 'xb',)
-    plt.show()
 
-    # по графику видим, что выборки практически неразличимы по этим параметрам
-    # нужное пороговое значение не находится
+    threshold = -1
+    left1 = len([x for x in p.Y[:n, 0] if x < threshold])/len(p.Y[:n, 0]) * 100
+    left2 = len([x for x in p.Y[n:, 0] if x < threshold])/len(p.Y[n:, 0]) * 100
+
+    print('По графику видим, что хорошего порога нет.',
+          'Например, если порог равен %d, по одну его сторону находятся %.2f процентов первой выборки и '
+          '%.2f процентов второй.' % (threshold, left1, left2),
+          sep='\n')
+
+    plt.show()
 
 if __name__ == '__main__':
     main()

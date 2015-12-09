@@ -4,6 +4,7 @@ import math
 from collections import Counter
 from pymorphy2 import MorphAnalyzer
 from pymorphy2.tokenizers import simple_word_tokenize
+from operator import itemgetter
 
 
 class Corpus(object):
@@ -82,7 +83,8 @@ def main():
     corpus.build_index()
     corpus.build_idf()
     corpus.build_tfidf()
-    print(sorted(corpus.tfidf, key=lambda x: x[1])[-10:])
+    ranked = sorted([(key, value) for key, value in corpus.tfidf.items()], key=itemgetter(1), reverse=True)[:10]
+    print([word for (word, score) in ranked])
 
 if __name__ == '__main__':
     main()
